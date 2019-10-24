@@ -1,11 +1,18 @@
 import falcon
 import sqlalchemy as db
+import time
 from app.resources.score import ScoreResource
 from app.resources.leaderboard import LeaderboardResource
 
-engine = db.create_engine('mysql://user:password@db:3306/db')
-connection = engine.connect()
-metadata = db.MetaData()
+while True:
+    try:
+        engine = db.create_engine('mysql://user:password@db:3306/db')
+        connection = engine.connect()
+        metadata = db.MetaData()
+        break
+    except:
+        print("sleeping waiting for database be ready")
+        time.sleep(5)
 
 leaderboard_control = db.Table('leaderboard_control', metadata, autoload=True, autoload_with=engine)
 
