@@ -20,16 +20,22 @@ class LeaderboardResource(BaseResource):
         resp.media={
             "leaderboard_id": inserted_leaderboard_id,
         }
+        print(resp)
 
     def on_post_start(self, req, resp, leaderboard_id):
         query=self.leaderboard_control.update().values(
-            status=LeaderboardStatus.STARTED.value).returning(self.leaderboard_control.c.leaderboard_id, self.leaderboard_control.c.status)
+            status=LeaderboardStatus.STARTED.value)
         query=query.where(
             self.leaderboard_control.columns.leaderboard_id == leaderboard_id)
         result=self.conn.execute(query)
-        updated=result.fetchone()
-        resp.status=falcon.HTTP_200
-        resp.media={
-            "leaderboard_id": updated["new_leaderboard_id"],
-            "status": updated["status"]
-        }
+
+        query2 = self.leaderboard_control.select()
+        result=self.conn.execute(query2)
+        for updated in result:
+            print(updated)
+            resp.status=falcon.HTTP_200
+            resp.media={
+                "leaderboard_id": updated["leaderboard_id"],
+                "status": updated["status"]
+            }
+            print(resp)
