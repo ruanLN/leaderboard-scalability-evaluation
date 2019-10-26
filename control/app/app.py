@@ -24,5 +24,7 @@ leaderboard_res = LeaderboardResource(leaderboard_control, connection)
 scores_res = ScoreResource(leaderboards)
 
 application.add_route('/leaderboard', leaderboard_res)
+application.add_route('/leaderboard/{leaderboard_id}', leaderboard_res)
 application.add_route('/leaderboard/{leaderboard_id}/start', leaderboard_res, suffix="start")
+application.add_route('/leaderboard/{leaderboard_id}/stop', leaderboard_res, suffix="stop")
 application.add_route('/score/{leaderboard_id}/{user_id}', scores_res)
