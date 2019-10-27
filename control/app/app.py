@@ -6,7 +6,7 @@ from app.resources.leaderboard import LeaderboardResource
 
 while True:
     try:
-        engine = db.create_engine('mysql://user:password@db:3306/db')
+        engine = db.create_engine('mysql://user:password@db:3306/db', echo=True)
         connection = engine.connect()
         metadata = db.MetaData()
         break
