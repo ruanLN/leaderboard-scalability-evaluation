@@ -6,7 +6,7 @@ from app.resources.leaderboard import LeaderboardResource
 
 while True:
     try:
-        engine = db.create_engine('mysql://user:password@db:3306/db')
+        engine = db.create_engine('mysql://user:password@db:3306/db', echo=True)
         connection = engine.connect()
         metadata = db.MetaData()
         break
@@ -21,10 +21,12 @@ leaderboards = db.Table('leaderboards', metadata, autoload=True, autoload_with=e
 application = falcon.API()
 # Create our resources
 leaderboard_res = LeaderboardResource(leaderboard_control, connection)
-scores_res = ScoreResource(leaderboards)
+scores_res = ScoreResource(leaderboards, leaderboard_control, connection)
 
 application.add_route('/leaderboard', leaderboard_res)
 application.add_route('/leaderboard/{leaderboard_id}', leaderboard_res)
 application.add_route('/leaderboard/{leaderboard_id}/start', leaderboard_res, suffix="start")
 application.add_route('/leaderboard/{leaderboard_id}/stop', leaderboard_res, suffix="stop")
-application.add_route('/score/{leaderboard_id}/{user_id}', scores_res)
+#application.add_route('/score/{leaderboard_id}/{min_pos}/{size}', scores_res, suffix="view")
+#application.add_route('/score/{leaderboard_id}/{user_id}', scores_res)
+application.add_route('/score/{leaderboard_id}/{user_id}/{score}', scores_res)
