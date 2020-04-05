@@ -1,4 +1,0 @@
-falcon
-gunicorn
-mysqlclient
-sqlalchemy
