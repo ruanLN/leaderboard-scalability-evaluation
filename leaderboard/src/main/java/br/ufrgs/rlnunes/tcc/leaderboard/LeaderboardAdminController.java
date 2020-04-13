@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/leaderboard/admin")
 public class LeaderboardAdminController {
 
+    LeaderboardAdminService leaderboardAdminService;
+
+    public LeaderboardAdminController(LeaderboardAdminService leaderboardAdminService) {
+        this.leaderboardAdminService = leaderboardAdminService;
+    }
+
     @GetMapping("/{leaderboardId}")
     public @ResponseBody String getTestData(@PathVariable String leaderboardId) {
         return leaderboardId;
