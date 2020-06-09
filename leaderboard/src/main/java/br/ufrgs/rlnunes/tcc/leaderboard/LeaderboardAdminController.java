@@ -18,15 +18,6 @@ public class LeaderboardAdminController {
 
     @GetMapping("/{leaderboardId}")
     public @ResponseBody String getTestData(@PathVariable String leaderboardId) {
-        return leaderboardId;
-    }
-
-    @GetMapping("/")
-    public @ResponseBody String test() {
-        return "Pepino";
-    }
-
-    public LeaderboardAdminController() {
-        System.out.println("OI");
+        return leaderboardAdminService.getLeaderboard(leaderboardId);
     }
 }
