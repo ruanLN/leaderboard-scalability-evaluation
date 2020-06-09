@@ -1,5 +1,7 @@
 package br.ufrgs.rlnunes.tcc.leaderboard;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,6 +12,11 @@ public class LeaderboardAdminService {
     @Autowired
     public LeaderboardAdminService(LeaderboardRepository leaderboardRepository) {
         this.leaderboardRepository = leaderboardRepository;
+    }
+
+    public Optional<Leaderboard> getLeaderboard(Long leaderboardId) {
+        Optional<Leaderboard> savedEntity = leaderboardRepository.findById(leaderboardId);
+        return savedEntity;
     }
 
     public Long createLeaderboard() {
@@ -28,4 +35,8 @@ public class LeaderboardAdminService {
     public void disableLeaderboard(Long leaderboardId) {
 
     }
+
+	public String getLeaderboard(String leaderboardId) {
+		return null;
+	}
 }
